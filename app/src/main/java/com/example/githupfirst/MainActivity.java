@@ -11,7 +11,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btn1,btn2;
     private TextView textView;
     boolean b=false;
-    int counter=0;
+    int counter2;
+    Thread counter;
 
 
     @Override
@@ -21,27 +22,31 @@ public class MainActivity extends AppCompatActivity {
         btn1=findViewById(R.id.button1);
         btn2=findViewById(R.id.buttone2);
         textView=findViewById(R.id.textview);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    while (b != true) {
-                        textView.setText(counter + "");
-
-                        counter++;
-                    }
 
 
-                }catch(Exception e){
-            }}
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                b=true;
+
+    }
+    public void startCount(View view) {
+        counter=new Thread(()->{
+            try {
+
+
+                while (true) {
+                    counter2++;
+                    textView.setText(counter2 + "");
+                    Thread.sleep(1000);
+
+
+                }
+
+
+            }catch(Exception e){
             }
         });
-
+        counter.start();
+    }
+    public void stopcount(View view){
+        counter.interrupt();
     }
 
 }
